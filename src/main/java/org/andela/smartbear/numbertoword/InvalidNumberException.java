@@ -1,8 +1,8 @@
 package org.andela.smartbear.numbertoword;
 
-public class InvalidNumberException extends RuntimeException{
+public class InvalidNumberException extends RuntimeException {
 
-    public InvalidNumberException(String message) {
+    public InvalidNumberException(final String message) {
         super(message);
     }
 }
