@@ -6,7 +6,12 @@ import org.andela.smartbear.timeconverter.InvalidTimeInputException;
 import org.andela.smartbear.timeconverter.TimeConverter;
 import org.andela.smartbear.timeconverter.TimeToBritishConverter;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,100 +25,91 @@ public class TimeToBritishConverterTest {
         timeConverter = new TimeToBritishConverter(numberToWords);
     }
 
-    @Test
-    public void testOClockTime(){
-        assertEquals(timeConverter.convertToWords("13:00"), "one o'clock");
-        assertEquals(timeConverter.convertToWords("01:00"), "one o'clock");
-        assertEquals(timeConverter.convertToWords("15:00"), "three o'clock");
-        assertEquals(timeConverter.convertToWords("03:00"), "three o'clock");
-        assertEquals(timeConverter.convertToWords("18:00"), "six o'clock");
-        assertEquals(timeConverter.convertToWords("23:00"), "eleven o'clock");
-        assertEquals(timeConverter.convertToWords("11:00"), "eleven o'clock");
+    static Stream<Arguments> provideTimeCases() {
+        return Stream.of(
+                // o’clock
+                Arguments.of("13:00", "one o'clock"),
+                Arguments.of("01:00", "one o'clock"),
+                Arguments.of("15:00", "three o'clock"),
+                Arguments.of("03:00", "three o'clock"),
+                Arguments.of("18:00", "six o'clock"),
+                Arguments.of("23:00", "eleven o'clock"),
+                Arguments.of("11:00", "eleven o'clock"),
+
+                // noon & midnight
+                Arguments.of("12:00", "noon"),
+                Arguments.of("00:00", "midnight"),
+
+                // half past
+                Arguments.of("00:30", "half past midnight"),
+                Arguments.of("01:30", "half past one"),
+                Arguments.of("13:30", "half past one"),
+                Arguments.of("12:30", "half past twelve"),
+                Arguments.of("06:30", "half past six"),
+                Arguments.of("18:30", "half past six"),
+                Arguments.of("03:30", "half past three"),
+                Arguments.of("15:30", "half past three"),
+
+                // quarter past
+                Arguments.of("00:15", "quarter past midnight"),
+                Arguments.of("01:15", "quarter past one"),
+                Arguments.of("13:15", "quarter past one"),
+                Arguments.of("12:15", "quarter past twelve"),
+                Arguments.of("06:15", "quarter past six"),
+                Arguments.of("18:15", "quarter past six"),
+                Arguments.of("03:15", "quarter past three"),
+                Arguments.of("15:15", "quarter past three"),
+
+                // quarter to
+                Arguments.of("00:45", "quarter to one"),
+                Arguments.of("01:45", "quarter to two"),
+                Arguments.of("13:45", "quarter to two"),
+                Arguments.of("12:45", "quarter to one"),
+                Arguments.of("06:45", "quarter to seven"),
+                Arguments.of("18:45", "quarter to seven"),
+                Arguments.of("03:45", "quarter to four"),
+                Arguments.of("15:45", "quarter to four"),
+                Arguments.of("11:45", "quarter to twelve"),
+
+                // past times
+                Arguments.of("00:05", "five past midnight"),
+                Arguments.of("01:20", "twenty past one"),
+                Arguments.of("13:10", "ten past one"),
+                Arguments.of("12:14", "fourteen past twelve"),
+                Arguments.of("06:29", "twenty nine past six"),
+                Arguments.of("18:02", "two past six"),
+                Arguments.of("03:23", "twenty three past three"),
+
+                // to times
+                Arguments.of("00:35", "twenty five to one"),
+                Arguments.of("01:40", "twenty to two"),
+                Arguments.of("13:50", "ten to two"),
+                Arguments.of("12:44", "sixteen to one"),
+                Arguments.of("06:39", "twenty one to seven"),
+                Arguments.of("18:52", "eight to seven"),
+                Arguments.of("03:33", "twenty seven to four"),
+                Arguments.of("23:50", "ten to twelve")
+        );
     }
 
-    @Test
-    public void testNoonTime(){
-        assertEquals(timeConverter.convertToWords("12:00"), "noon");
+    @ParameterizedTest
+    @MethodSource("provideTimeCases")
+    public void testOClockTime(String input, String expectedOutput){
+        assertEquals(expectedOutput, timeConverter.convertToWords(input));
     }
 
-    @Test
-    public void testMidnightTime(){
-        assertEquals(timeConverter.convertToWords("00:00"), "midnight");
-    }
-
-    @Test
-    public void testHalfPastTime(){
-        assertEquals(timeConverter.convertToWords("00:30"), "half past midnight");
-        assertEquals(timeConverter.convertToWords("01:30"), "half past one");
-        assertEquals(timeConverter.convertToWords("13:30"), "half past one");
-        assertEquals(timeConverter.convertToWords("12:30"), "half past twelve");
-        assertEquals(timeConverter.convertToWords("06:30"), "half past six");
-        assertEquals(timeConverter.convertToWords("18:30"), "half past six");
-        assertEquals(timeConverter.convertToWords("03:30"), "half past three");
-        assertEquals(timeConverter.convertToWords("15:30"), "half past three");
-    }
-
-    @Test
-    public void testQuarterPastTime(){
-        assertEquals(timeConverter.convertToWords("00:15"), "quarter past midnight");
-        assertEquals(timeConverter.convertToWords("01:15"), "quarter past one");
-        assertEquals(timeConverter.convertToWords("13:15"), "quarter past one");
-        assertEquals(timeConverter.convertToWords("12:15"), "quarter past twelve");
-        assertEquals(timeConverter.convertToWords("06:15"), "quarter past six");
-        assertEquals(timeConverter.convertToWords("18:15"), "quarter past six");
-        assertEquals(timeConverter.convertToWords("03:15"), "quarter past three");
-        assertEquals(timeConverter.convertToWords("15:15"), "quarter past three");
-    }
-
-    @Test
-    public void testQuarterToTime(){
-        assertEquals(timeConverter.convertToWords("00:45"), "quarter to one");
-        assertEquals(timeConverter.convertToWords("01:45"), "quarter to two");
-        assertEquals(timeConverter.convertToWords("13:45"), "quarter to two");
-        assertEquals(timeConverter.convertToWords("12:45"), "quarter to one");
-        assertEquals(timeConverter.convertToWords("06:45"), "quarter to seven");
-        assertEquals(timeConverter.convertToWords("18:45"), "quarter to seven");
-        assertEquals(timeConverter.convertToWords("03:45"), "quarter to four");
-        assertEquals(timeConverter.convertToWords("15:45"), "quarter to four");
-        assertEquals(timeConverter.convertToWords("11:45"), "quarter to twelve");
-    }
-
-    @Test
-    public void testPastTime(){
-        assertEquals(timeConverter.convertToWords("00:05"), "five past midnight");
-        assertEquals(timeConverter.convertToWords("01:20"), "twenty past one");
-        assertEquals(timeConverter.convertToWords("13:10"), "ten past one");
-        assertEquals(timeConverter.convertToWords("12:14"), "fourteen past twelve");
-        assertEquals(timeConverter.convertToWords("06:29"), "twenty nine past six");
-        assertEquals(timeConverter.convertToWords("18:02"), "two past six");
-        assertEquals(timeConverter.convertToWords("03:23"), "twenty three past three");
-    }
-
-    @Test
-    public void testToTime(){
-        assertEquals(timeConverter.convertToWords("00:35"), "twenty five to one");
-        assertEquals(timeConverter.convertToWords("01:40"), "twenty to two");
-        assertEquals(timeConverter.convertToWords("13:50"), "ten to two");
-        assertEquals(timeConverter.convertToWords("12:44"), "sixteen to one");
-        assertEquals(timeConverter.convertToWords("06:39"), "twenty one to seven");
-        assertEquals(timeConverter.convertToWords("18:52"), "eight to seven");
-        assertEquals(timeConverter.convertToWords("03:33"), "twenty seven to four");
-        assertEquals(timeConverter.convertToWords("23:50"), "ten to twelve");
-    }
-    
-    @Test
-    public void testInvalidInputValidation(){
-        //must have semi colon
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("1200"));
-
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("12:000"));
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("012:00"));
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("12:0"));
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("36:00"));
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("4200"));
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("12:80"));
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords("1:60"));
-
+    @ParameterizedTest
+    @ValueSource(strings = {"1200",
+            "12:000",
+            "012:00",
+            "12:0",
+            "36:00",
+            "4200",
+            "12:80",
+            "1:60"
+    })
+    public void testInvalidInputValidation(String input){
+        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords(input));
     }
 
 

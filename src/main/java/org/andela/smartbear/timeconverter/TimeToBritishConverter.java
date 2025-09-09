@@ -79,17 +79,17 @@ public class TimeToBritishConverter implements TimeConverter {
             throw new InvalidTimeInputException("Invalid time input: minute string must be of length 2");
         }
 
-        int hourValue = 0;
-        int minuteValue = 0;
+        int hourValue;
+        int minuteValue;
         try {
             hourValue = Integer.parseInt(timeValues[0]);
             minuteValue = Integer.parseInt(timeValues[1]);
         }catch (NumberFormatException ex){
-            throw  new InvalidTimeInputException("Time string must be in number format only");
+            throw new InvalidTimeInputException("Time string must be in number format only");
         }
 
-        if(hourValue > 24 || hourValue < 0){
-            throw new InvalidTimeInputException("Invalid time input: hour value must be between 0 and 24 (inclusive)");
+        if(hourValue > 23 || hourValue < 0){
+            throw new InvalidTimeInputException("Invalid time input: hour value must be between 0 and 23 (inclusive)");
         }
         if(minuteValue > 59 || minuteValue < 0){
             throw new InvalidTimeInputException("Invalid time input: minute value be between 0 and 59 (inclusive)");
