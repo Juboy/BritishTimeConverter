@@ -1,4 +1,4 @@
-package org.andela.smartbear.numbertoword;
+package org.andela.smartbear.numbertoword.exception;
 
 public class InvalidNumberException extends RuntimeException {
 

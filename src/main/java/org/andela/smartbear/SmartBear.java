@@ -1,17 +1,16 @@
 package org.andela.smartbear;
 
 import java.util.Scanner;
-import org.andela.smartbear.numbertoword.NumberToEnglishWords;
-import org.andela.smartbear.numbertoword.NumberToWords;
-import org.andela.smartbear.timeconverter.InvalidTimeInputException;
-import org.andela.smartbear.timeconverter.TimeConverter;
-import org.andela.smartbear.timeconverter.TimeToBritishConverter;
+import org.andela.smartbear.timeconverter.TimeConverterStrategy;
+import org.andela.smartbear.timeconverter.TimeToBritishConverterFactory;
+import org.andela.smartbear.timeconverter.TimeToWordsFactory;
+import org.andela.smartbear.timeconverter.exception.InvalidTimeInputException;
 
 public class SmartBear {
 
     public static void main(final String[] args) {
-        final NumberToWords numberToWords = new NumberToEnglishWords();
-        final TimeConverter converter = new TimeToBritishConverter(numberToWords);
+        final TimeToWordsFactory timeToBritishConverterFactory = new TimeToBritishConverterFactory();
+        final TimeConverterStrategy converter = timeToBritishConverterFactory.createTimeConverter();
 
         final Scanner timeStringScanner = new Scanner(System.in);
 

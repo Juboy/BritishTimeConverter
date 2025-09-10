@@ -1,13 +1,14 @@
 package org.andela.smartbear.timeconverter;
 
-import org.andela.smartbear.numbertoword.NumberToWords;
+import org.andela.smartbear.numbertoword.NumberToWordsStrategy;
+import org.andela.smartbear.timeconverter.exception.InvalidTimeInputException;
 
-public class TimeToBritishConverter implements TimeConverter {
+public class BritishTimeConverterStrategy implements TimeConverterStrategy {
 
-    private final NumberToWords numberToWords;
+    private final NumberToWordsStrategy numberToWordsStrategy;
 
-    public TimeToBritishConverter(final NumberToWords numberToWords) {
-        this.numberToWords = numberToWords;
+    public BritishTimeConverterStrategy(final NumberToWordsStrategy numberToWordsStrategy) {
+        this.numberToWordsStrategy = numberToWordsStrategy;
     }
 
     /**
@@ -34,7 +35,7 @@ public class TimeToBritishConverter implements TimeConverter {
             if (hourValue == 12) {
                 return "noon";
             }
-            final String hourString = numberToWords.convertIntegerToWords(pastHourValue).trim();
+            final String hourString = numberToWordsStrategy.convert(pastHourValue).trim();
             return hourString + " o'clock";
         }
 
@@ -42,7 +43,7 @@ public class TimeToBritishConverter implements TimeConverter {
             if (hourValue == 0) {
                 return "half past midnight";
             }
-            final String hourString = numberToWords.convertIntegerToWords(pastHourValue).trim();
+            final String hourString = numberToWordsStrategy.convert(pastHourValue).trim();
             return "half past " + hourString;
         }
 
@@ -50,23 +51,23 @@ public class TimeToBritishConverter implements TimeConverter {
             if (hourValue == 0) {
                 return "quarter past midnight";
             }
-            final String hourString = numberToWords.convertIntegerToWords(pastHourValue).trim();
+            final String hourString = numberToWordsStrategy.convert(pastHourValue).trim();
             return "quarter past " + hourString;
         }
 
         if (minuteValue == 45) {
-            final String hourString = numberToWords.convertIntegerToWords(toHourValue).trim();
+            final String hourString = numberToWordsStrategy.convert(toHourValue).trim();
             return "quarter to " + hourString;
         }
 
         if (minuteValue < 30) {
-            final String minuteString = numberToWords.convertIntegerToWords(minuteValue).trim();
-            final String hourString = hourValue == 0 ? "midnight" : numberToWords.convertIntegerToWords(pastHourValue).trim();
+            final String minuteString = numberToWordsStrategy.convert(minuteValue).trim();
+            final String hourString = hourValue == 0 ? "midnight" : numberToWordsStrategy.convert(pastHourValue).trim();
             return minuteString + " past " + hourString;
         } else {
             final int minuteOffset = 60 - minuteValue;
-            final String minuteOffsetString = numberToWords.convertIntegerToWords(minuteOffset).trim();
-            final String hourString = numberToWords.convertIntegerToWords(toHourValue).trim();
+            final String minuteOffsetString = numberToWordsStrategy.convert(minuteOffset).trim();
+            final String hourString = numberToWordsStrategy.convert(toHourValue).trim();
             return minuteOffsetString + " to " + hourString;
         }
     }

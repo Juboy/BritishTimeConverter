@@ -1,10 +1,10 @@
 package org.andela.smartbear;
 
-import org.andela.smartbear.numbertoword.NumberToEnglishWords;
-import org.andela.smartbear.numbertoword.NumberToWords;
-import org.andela.smartbear.timeconverter.InvalidTimeInputException;
-import org.andela.smartbear.timeconverter.TimeConverter;
-import org.andela.smartbear.timeconverter.TimeToBritishConverter;
+import org.andela.smartbear.numbertoword.NumberToEnglishWordsStrategy;
+import org.andela.smartbear.numbertoword.NumberToWordsStrategy;
+import org.andela.smartbear.timeconverter.exception.InvalidTimeInputException;
+import org.andela.smartbear.timeconverter.TimeConverterStrategy;
+import org.andela.smartbear.timeconverter.BritishTimeConverterStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,14 +15,14 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TimeToBritishConverterTest {
+public class BritishTimeConverterStrategyTest {
 
-    private TimeConverter timeConverter;
+    private TimeConverterStrategy timeConverterStrategy;
 
     @BeforeEach
     public void setup(){
-        NumberToWords numberToWords = new NumberToEnglishWords();
-        timeConverter = new TimeToBritishConverter(numberToWords);
+        NumberToWordsStrategy numberToWordsStrategy = new NumberToEnglishWordsStrategy();
+        timeConverterStrategy = new BritishTimeConverterStrategy(numberToWordsStrategy);
     }
 
     static Stream<Arguments> provideTimeCases() {
@@ -95,7 +95,7 @@ public class TimeToBritishConverterTest {
     @ParameterizedTest
     @MethodSource("provideTimeCases")
     public void testOClockTime(String input, String expectedOutput){
-        assertEquals(expectedOutput, timeConverter.convertToWords(input));
+        assertEquals(expectedOutput, timeConverterStrategy.convertToWords(input));
     }
 
     @ParameterizedTest
@@ -109,7 +109,7 @@ public class TimeToBritishConverterTest {
             "1:60"
     })
     public void testInvalidInputValidation(String input){
-        assertThrows(InvalidTimeInputException.class, () -> timeConverter.convertToWords(input));
+        assertThrows(InvalidTimeInputException.class, () -> timeConverterStrategy.convertToWords(input));
     }
 
 

@@ -1,4 +1,4 @@
-package org.andela.smartbear.timeconverter;
+package org.andela.smartbear.timeconverter.exception;
 
 public class InvalidTimeInputException extends RuntimeException {
 

@@ -1,6 +1,8 @@
 package org.andela.smartbear.timeconverter;
 
-public interface TimeConverter {
+import org.andela.smartbear.timeconverter.exception.InvalidTimeInputException;
+
+public interface TimeConverterStrategy {
 
     /**
      * Returns time expression in words
