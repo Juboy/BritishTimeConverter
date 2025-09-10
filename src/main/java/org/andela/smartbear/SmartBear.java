@@ -16,7 +16,7 @@ public class SmartBear {
 
         while (true) {
             System.out.println("Enter time in 24 hour format format xx:xx (e.g 13:05). 'q' to quit ");
-            final String timeString = timeStringScanner.nextLine();
+            final String timeString = timeStringScanner.nextLine().trim();
             if (timeString.equals("q")) {
                 System.out.println("Bye!!!");
                 break;
