@@ -21,7 +21,7 @@ The source code can be found in the ````src/main/java````  while tests written w
 ### Tools
 Here are the tools required to start the application:
 
-* Java 8 - This project uses java 8. You need to have this installed on your machine.
+* Java 21 - This project uses java 21. You need to have this installed on your machine.
 
 
 ### Starting the Application
