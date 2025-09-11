@@ -2,6 +2,7 @@ package org.andela.smartbear.timeconverter;
 
 import org.andela.smartbear.numbertoword.NumberToEnglishWordsStrategy;
 import org.andela.smartbear.numbertoword.NumberToWordsStrategy;
+import org.andela.smartbear.timeconverter.british.BritishTimeConverterStrategy;
 
 public class TimeToBritishConverterFactory implements TimeToWordsFactory {
 
