@@ -1,4 +1,4 @@
-package org.andela.smartbear;
+package org.andela.smartbear.numbertoword;
 
 import org.andela.smartbear.numbertoword.NumberToEnglishWordsStrategy;
 import org.andela.smartbear.numbertoword.NumberToWordsStrategy;

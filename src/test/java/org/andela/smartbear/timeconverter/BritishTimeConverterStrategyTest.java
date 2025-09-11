@@ -1,9 +1,8 @@
-package org.andela.smartbear;
+package org.andela.smartbear.timeconverter;
 
 import org.andela.smartbear.numbertoword.NumberToEnglishWordsStrategy;
 import org.andela.smartbear.numbertoword.NumberToWordsStrategy;
 import org.andela.smartbear.timeconverter.exception.InvalidTimeInputException;
-import org.andela.smartbear.timeconverter.TimeConverterStrategy;
 import org.andela.smartbear.timeconverter.british.BritishTimeConverterStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
