@@ -18,7 +18,7 @@ public class BritishTimeConverterStrategy implements TimeConverterStrategy {
             new MinutesToStrategy()
     );
 
-    private static final Pattern TIME_PATTERN = Pattern.compile("^(?:[01]\\d|2[0-3]):[0-5]\\d$");
+    private static final Pattern TIME_PATTERN = Pattern.compile("^(?:[0-9]|[01]\\d|2[0-3]):[0-5]\\d$");
 
     public BritishTimeConverterStrategy(final NumberToWordsStrategy numberToWordsStrategy) {
         this.numberToWordsStrategy = numberToWordsStrategy;
