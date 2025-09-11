@@ -38,7 +38,7 @@ public class BritishTimeConverterStrategy implements TimeConverterStrategy {
         final int minuteValue = Integer.parseInt(timeValues[1]);
 
         return strategies.stream()
-                .filter(s -> s.supports(hourValue, minuteValue))
+                .filter(s -> s.supports(minuteValue))
                 .findFirst()
                 .orElseThrow(() -> new InvalidTimeInputException("Unsupported time format"))
                 .convert(hourValue, minuteValue, numberToWordsStrategy);

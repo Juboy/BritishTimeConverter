@@ -5,7 +5,7 @@ import org.andela.smartbear.numbertoword.NumberToWordsStrategy;
 public class MinutesToStrategy implements  TimeExpressionStrategy {
 
     @Override
-    public boolean supports(final int hour, final int minute) {
+    public boolean supports(final int minute) {
         return minute > 30 && minute != 45 && minute < 60;
     }
 

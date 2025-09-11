@@ -87,6 +87,7 @@ public class BritishTimeConverterStrategyTest {
                 Arguments.of("06:39", "twenty one to seven"),
                 Arguments.of("18:52", "eight to seven"),
                 Arguments.of("03:33", "twenty seven to four"),
+                Arguments.of("06:34", "twenty six to seven"),
                 Arguments.of("23:50", "ten to twelve")
         );
     }
